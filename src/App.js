@@ -352,11 +352,29 @@ export default function App() {
 
       {role === 'guest' && remoteStream && <RemoteAudio stream={remoteStream} />}
 
-      <Canvas camera={{ position: [0, 8, 7] }}>
-        <ambientLight intensity={0.5} /><pointLight position={[10, 10, 10]} />
-        <Grid infiniteGrid sectionColor="#333" cellColor="#111" />
-        <Box args={[10, 0.2, 5.0]} position={[0, -0.11, 0.5]}><meshStandardMaterial color="#111" /></Box>
+<Canvas 
+        camera={{ position: [0, 8, 7] }}
+        onCreated={({ gl }) => {
+          // 背景色を白（#ffffff）に設定
+          gl.setClearColor('#ffffff');
+        }}
+      >
+        {/* 背景が白の時は、少し環境光を強めにすると綺麗です */}
+        <ambientLight intensity={0.7} />
+        <pointLight position={[10, 10, 10]} intensity={1.5} />
+        
+        {/* グリッドの色を白背景に合わせて薄いグレーに変更 */}
+        <Grid 
+          infiniteGrid 
+          sectionColor="#d1d1d1" 
+          cellColor="#eeeeee" 
+          sectionSize={3} 
+          fadeDistance={30}
+        />
 
+        {/* --- 以下、既存のDJ機材コンポーネント --- */}
+        <Box args={[10, 0.2, 5.0]} position={[0, -0.11, 0.5]}><meshStandardMaterial color="#222" /></Box>
+        {/* ...残りのコード... */}
         {/* Deck 1 */}
         <group position={[-3.2, 0, 0.5]}>
           <JogDeck deckId="1" color="cyan" hardwareRef={hardware} />
