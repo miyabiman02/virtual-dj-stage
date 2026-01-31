@@ -278,8 +278,7 @@ export default function App() {
       }
     }, 40); 
     return () => clearInterval(interval);
-  }, [role]);
-
+}, [role, analyzerRef]); // analyzerRef を追加
   useEffect(() => {
     if (role !== 'host') return;
     const onMIDIMessage = (m) => {
